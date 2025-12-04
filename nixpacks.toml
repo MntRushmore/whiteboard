@@ -1,8 +1,11 @@
 [phases.setup]
-nixPkgs = ["nodejs_18"]
+nixPkgs = ["nodejs_18", "openssl"]
 
 [phases.install]
 cmds = ["npm install"]
+
+[phases.build]
+cmds = ["echo 'Skipping Next.js build for WebSocket server'"]
 
 [start]
 cmd = "npm run server"
