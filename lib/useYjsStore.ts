@@ -30,8 +30,8 @@ export function useYjsStore({
         event.changes.keys.forEach((change, key) => {
           if (change.action === 'delete') {
             const recordId = key as RecordId<TLRecord>;
-            const record = newStore.get(recordId);
-            if (record) {
+            // Check if record exists before removing
+            if (newStore.has(recordId)) {
               newStore.remove([recordId]);
             }
           } else if (change.action === 'add' || change.action === 'update') {
