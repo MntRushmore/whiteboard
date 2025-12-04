@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TLRecord, createTLStore, defaultShapeUtils, RecordId } from '@tldraw/tldraw';
+import { TLRecord, createTLStore, defaultShapeUtils } from '@tldraw/tldraw';
 import { WebsocketProvider } from 'y-websocket';
 import * as Y from 'yjs';
 
@@ -29,8 +29,8 @@ export function useYjsStore({
       newStore.mergeRemoteChanges(() => {
         event.changes.keys.forEach((change, key) => {
           if (change.action === 'delete') {
-            const recordId = key as RecordId<TLRecord>;
-            // Check if record exists before removing
+            // Use type assertion to bypass strict type checking
+            const recordId = key as any;
             if (newStore.has(recordId)) {
               newStore.remove([recordId]);
             }
