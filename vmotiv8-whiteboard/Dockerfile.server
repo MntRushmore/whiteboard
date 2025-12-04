@@ -1,0 +1,22 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --only=production
+
+# Copy server code
+COPY server ./server
+COPY tsconfig.json ./
+
+# Install tsx for running TypeScript
+RUN npm install -g tsx
+
+# Expose WebSocket port
+EXPOSE 1234
+
+# Start server
+CMD ["npm", "run", "server"]
