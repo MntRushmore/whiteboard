@@ -6,7 +6,8 @@ import * as encoding from 'lib0/encoding';
 import * as decoding from 'lib0/decoding';
 import * as map from 'lib0/map';
 
-const PORT = process.env.WS_PORT ? parseInt(process.env.WS_PORT) : 1234;
+// Railway uses PORT, local dev uses WS_PORT
+const PORT = process.env.PORT ? parseInt(process.env.PORT) : process.env.WS_PORT ? parseInt(process.env.WS_PORT) : 1234;
 
 const wss = new WebSocketServer({ port: PORT });
 
