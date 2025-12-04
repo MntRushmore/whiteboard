@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TLRecord, createTLStore, defaultShapeUtils } from '@tldraw/tldraw';
+import { TLRecord, createTLStore, defaultShapeUtils, RecordId } from '@tldraw/tldraw';
 import { WebsocketProvider } from 'y-websocket';
 import * as Y from 'yjs';
 
@@ -29,9 +29,10 @@ export function useYjsStore({
       newStore.mergeRemoteChanges(() => {
         event.changes.keys.forEach((change, key) => {
           if (change.action === 'delete') {
-            const record = newStore.get(key as any);
+            const recordId = key as RecordId<TLRecord>;
+            const record = newStore.get(recordId);
             if (record) {
-              newStore.remove([record.id]);
+              newStore.remove([recordId]);
             }
           } else if (change.action === 'add' || change.action === 'update') {
             const value = yStore.get(key);
